@@ -12,10 +12,15 @@ if "safer_output" not in st.session_state:
     st.stop()
 
 data = st.session_state["safer_output"]
+
 drug = data["drug"]
 results = data["results"]
 safety = data["safety_summary"]
 mechanisms = data.get("mechanisms", [])
+indications = data.get("indications", {})
+
+approved_inds = indications.get("approved", [])
+investigational_inds = indications.get("investigational", [])
 
 # --------------------
 # HEADER
@@ -35,7 +40,7 @@ if safety["risk_level"] == "HIGH":
     )
 
 # --------------------
-# MECHANISM OF ACTION (✅ FIXED)
+# MECHANISM OF ACTION
 # --------------------
 st.subheader("Mechanism of Action")
 
@@ -49,21 +54,21 @@ else:
         )
 
 # --------------------
-# APPROVED & INVESTIGATIONAL INDICATIONS
+# APPROVED & INVESTIGATIONAL INDICATIONS (✅ FIXED)
 # --------------------
 st.subheader("Approved & Investigational Indications")
 
 cols = st.columns(5)
 
-# (Still placeholder — OK for hackathon, real data can be wired later)
-approved = ["Pain", "Fever", "Inflammation", "Cardiovascular Prevention"]
-investigational = ["Colorectal Cancer Prevention"]
+# Approved
+for i, ind in enumerate(approved_inds[:4]):
+    cols[i].success(f"{ind}\n\nApproved")
 
-for i, ind in enumerate(approved):
-    if i < len(cols):
-        cols[i].success(f"{ind}\n\nApproved")
-
-cols[-1].info(f"{investigational[0]}\n\nInvestigational")
+# Investigational (if present)
+if investigational_inds:
+    cols[-1].info(f"{investigational_inds[0]}\n\nInvestigational")
+else:
+    cols[-1].warning("No investigational indications")
 
 # --------------------
 # REPURPOSING OPPORTUNITIES
@@ -88,7 +93,6 @@ for _, row in df.head(5).iterrows():
 # --------------------
 st.subheader("Safety Insights")
 
-# Bar chart: ADR signals
 events = safety["high_risk_events"][:5]
 counts = list(range(len(events), 0, -1))
 
@@ -101,7 +105,7 @@ fig1 = px.bar(
 )
 st.plotly_chart(fig1, use_container_width=True)
 
-# Radar chart (still illustrative)
+# Radar chart (illustrative but data-driven later)
 radar_df = pd.DataFrame({
     "Target Family": ["Immune", "Inflammatory", "Cardiovascular", "Metabolic", "Other"],
     "Risk": [5, 3, 2, 1, 1]

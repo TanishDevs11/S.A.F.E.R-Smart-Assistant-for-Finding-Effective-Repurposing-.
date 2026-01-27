@@ -9,6 +9,9 @@ from chembl.resolver import resolve_drug_by_chembl_id
 from chembl.parser import parse_drug_response
 
 from mechanism.fetcher import fetch_drug_mechanisms
+from mechanism.normalizer import normalize_mechanisms
+
+from indications.fetcher import fetch_drug_indications   # ✅ NEW
 
 from stage3.fetcher import fetch_target_disease_associations
 from stage3.aggregator import aggregate_disease_associations
@@ -36,22 +39,29 @@ def run_safer_pipeline(chembl_id: str) -> dict:
     # -------------------------
     # Stage 2 – Mechanism & targets
     # -------------------------
-    mechanisms = fetch_drug_mechanisms(chembl_id)
+    raw_mechanisms = fetch_drug_mechanisms(chembl_id)
+    mechanisms = normalize_mechanisms(raw_mechanisms)
 
-    targets = set()
-    for moa in mechanisms:
-        for t in moa.get("targets", []):
-            targets.add(t["id"])
+    targets = {
+        t["id"]
+        for moa in raw_mechanisms
+        for t in moa.get("targets", [])
+    }
 
     # -------------------------
-        # -------------------------
-    # Stage 3 – Disease prioritization
+    # Stage 2.5 – Known indications (truth source)
+    # -------------------------
+    indications = fetch_drug_indications(chembl_id)   # ✅ REAL approved uses
+
+    # -------------------------
+    # Stage 3 – Disease prioritization (repurposing)
     # -------------------------
     all_associations = []
 
     for target_id in targets:
-        associations = fetch_target_disease_associations(target_id)
-        all_associations.extend(associations)
+        all_associations.extend(
+            fetch_target_disease_associations(target_id)
+        )
 
     aggregated = aggregate_disease_associations(all_associations)
 
@@ -61,7 +71,6 @@ def run_safer_pipeline(chembl_id: str) -> dict:
         aggregated,
         known_indications
     )
-
 
     # -------------------------
     # Stage 4 – Safety-aware scoring
@@ -75,16 +84,20 @@ def run_safer_pipeline(chembl_id: str) -> dict:
     )
 
     # -------------------------
-    # Final output
+    # Final output (frontend contract)
     # -------------------------
     return {
         "drug": drug,
+        "mechanisms": mechanisms,
+        "indications": indications,        # ✅ FIXES approved row
         "safety_summary": safety_summary,
         "results": safer_results
     }
 
 
-# Allow CLI-style execution
+# -------------------------
+# CLI execution (optional)
+# -------------------------
 if __name__ == "__main__":
     import pprint
 
