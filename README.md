@@ -35,31 +35,25 @@ Safety-Aware Disease Re-scoring
 
 Project Structure:
 S.A.F.E.R/
-│
-├── app.py                  # Pipeline orchestrator
-│
-├── chembl/                 # Stage 1 – Drug identity
-│   ├── validator.py
-│   ├── resolver.py
-│   └── parser.py
-│
-├── mechanism/              # Stage 2 – Mechanism & targets
-│   └── fetcher.py
-│
-├── stage3/                 # Stage 3 – Disease prioritization
-│   ├── fetcher.py
-│   ├── aggregator.py
-│   ├── filter.py
-│   ├── ranker.py
-│   └── prioritizer.py
-│
-├── safety/                 # Stage 4 – Safety layer
-│   ├── fetcher.py
-│   ├── normalizer.py
-│   └── scorer.py
-│
-├── requirements.txt
-└── README.md
+├── app.py                      # Pipeline Orchestrator (Main Entry Point)
+├── chembl/                     # STAGE 1: DRUG IDENTITY
+│   ├── validator.py            # Validates ChEMBL IDs and Names
+│   ├── resolver.py             # Resolves chemical synonyms
+│   └── parser.py               # Standardizes raw API responses
+├── mechanism/                  # STAGE 2: MECHANISM & TARGETS
+│   └── fetcher.py              # Maps drugs to MoA and biological targets
+├── stage3/                     # STAGE 3: DISEASE PRIORITIZATION
+│   ├── fetcher.py              # Gathers disease-target association data
+│   ├── aggregator.py           # Merges drug-target and disease-target sets
+│   ├── filter.py               # Applies clinical and biological thresholds
+│   ├── ranker.py               # Scores potential therapeutic matches
+│   └── prioritizer.py          # Final logic for indication ranking
+├── safety/                     # STAGE 4: SAFETY LAYER
+│   ├── fetcher.py              # Pulls pharmacovigilance (ADR) signals
+│   ├── normalizer.py           # Standardizes signal counts and logLR
+│   └── scorer.py               # Calculates final safety-aware risk score
+├── requirements.txt            # Project dependencies
+└── README.md                   # Documentation and project overview
 
 Installation & Setup
 Clone the repository
