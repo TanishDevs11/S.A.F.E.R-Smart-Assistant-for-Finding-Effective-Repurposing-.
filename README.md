@@ -173,23 +173,6 @@ Known Indication Filtering
 Safety Signal Analysis (Stage 4)
       ↓
 Safety-Aware Disease Re-scoring
-RepurposAI/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── app/
-│   ├── main.py                 # Streamlit main app
-│   ├── dashboard.py            # Dashboard assembly module
-│   ├── visualization.py        # Plotly/Seaborn visualization module
-│   └── utils/
-│       ├── api_integration.py  # Open Targets & KEGG API helpers
-│       ├── similarity.py       # RDKit similarity functions
-│       └── ml_model.py         # Placeholder for target prediction ML
-├── data/                       # Sample data or placeholder CSVs
-├── docs/                       # README, usage guide, hackathon slides
-├── tests/                      # Basic test scripts for functions
-└── notebooks/                  # Jupyter notebooks for testing ML/API modules
-    └── example_notebook.ipynb
 
 Project Structure:
 S.A.F.E.R/
