@@ -33,41 +33,6 @@ Safety Signal Analysis (Stage 4)
       ↓
 Safety-Aware Disease Re-scoring
 
-Project Structure:
-S.A.F.E.R
-
-Safety-Aware Framework for Drug Repurposing
-
-S.A.F.E.R is a modular, safety-aware drug repurposing pipeline built on live Open Targets Platform data.
-It identifies biologically plausible new disease indications for existing drugs and explicitly penalizes unsafe candidates using real-world adverse event data.
-
-Not just “what might work”, but “what might work safely”.
-
-Key Features:
-
-1. ChEMBL-centric drug identity resolution
-2. Mechanism- and target-driven disease prioritization
-3. Automatic exclusion of known indications
-4. Real pharmacovigilance (FAERS) safety signals
-5. Safety-aware re-scoring (SAFER score)
-6. Live queries to Open Targets (no static datasets)
-7. Fully modular, extensible architecture
-
-Pipeline:
-
-ChEMBL Drug ID
-      ↓
-Drug Identity Validation (Stage 1)
-      ↓
-Mechanism of Action & Targets (Stage 2)
-      ↓
-Target → Disease Associations (Stage 3)
-      ↓
-Known Indication Filtering
-      ↓
-Safety Signal Analysis (Stage 4)
-      ↓
-Safety-Aware Disease Re-scoring
 
 Project Structure:
 S.A.F.E.R/
