@@ -88,5 +88,10 @@ def run_safer_pipeline(chembl_id: str) -> dict:
 if __name__ == "__main__":
     import pprint
 
-    output = run_safer_pipeline("CHEMBL25")
-    pprint.pprint(output)
+    chembl_id = input("Enter ChEMBL ID (e.g., CHEMBL25): ").strip()
+
+    try:
+        output = run_safer_pipeline(chembl_id)
+        pprint.pprint(output)
+    except ValueError as e:
+        print(f"\n❌ Error: {e}")
