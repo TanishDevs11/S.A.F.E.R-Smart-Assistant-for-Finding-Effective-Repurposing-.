@@ -1,29 +1,24 @@
-🛡️ S.A.F.E.R
+S.A.F.E.R
 
 Safety-Aware Framework for Drug Repurposing
 
 S.A.F.E.R is a modular, safety-aware drug repurposing pipeline built on live Open Targets Platform data.
 It identifies biologically plausible new disease indications for existing drugs and explicitly penalizes unsafe candidates using real-world adverse event data.
 
-🔬 Not just “what might work”, but “what might work safely”.
+Not just “what might work”, but “what might work safely”.
 
-🚀 Key Features
+Key Features:
 
-✅ ChEMBL-centric drug identity resolution
+1. ChEMBL-centric drug identity resolution
+2. Mechanism- and target-driven disease prioritization
+3. Automatic exclusion of known indications
+4. Real pharmacovigilance (FAERS) safety signals
+5. Safety-aware re-scoring (SAFER score)
+6. Live queries to Open Targets (no static datasets)
+7. Fully modular, extensible architecture
 
-🧬 Mechanism- and target-driven disease prioritization
+Pipeline:
 
-🚫 Automatic exclusion of known indications
-
-⚠️ Real pharmacovigilance (FAERS) safety signals
-
-📉 Safety-aware re-scoring (SAFER score)
-
-🔁 Live queries to Open Targets (no static datasets)
-
-🧩 Fully modular, extensible architecture
-
-🧠 High-Level Pipeline
 ChEMBL Drug ID
       ↓
 Drug Identity Validation (Stage 1)
@@ -38,7 +33,7 @@ Safety Signal Analysis (Stage 4)
       ↓
 Safety-Aware Disease Re-scoring
 
-🏗️ Project Structure
+Project Structure:
 S.A.F.E.R/
 │
 ├── app.py                  # Pipeline orchestrator
@@ -66,12 +61,12 @@ S.A.F.E.R/
 ├── requirements.txt
 └── README.md
 
-⚙️ Installation & Setup
-1️⃣ Clone the repository
+Installation & Setup
+Clone the repository
 git clone <your-repo-url>
 cd S.A.F.E.R
 
-2️⃣ Create & activate virtual environment
+Create & activate virtual environment
 python -m venv venv
 
 
@@ -84,10 +79,10 @@ Linux / macOS
 
 source venv/bin/activate
 
-3️⃣ Install dependencies
+Install dependencies
 pip install -r requirements.txt
 
-▶️ Running SAFER
+Running SAFER
 
 Run the full pipeline using a ChEMBL ID:
 
@@ -108,7 +103,7 @@ Example (CHEMBL25 – Aspirin)
   ]
 }
 
-📊 SAFER Scoring Logic
+SAFER Scoring Logic
 Risk Level	Penalty Factor
 LOW	1.0
 MEDIUM	0.75
@@ -118,7 +113,7 @@ SAFER Score = Association Score × Safety Penalty
 
 This ensures biological plausibility is preserved while unsafe drugs are deprioritized.
 
-🧪 Data Sources
+Data Sources
 
 Open Targets Platform (GraphQL API)
 
@@ -128,37 +123,25 @@ Mechanisms of action
 
 Pharmacovigilance (FAERS)
 
-⚠️ No datasets are downloaded or stored locally.
+No datasets are downloaded or stored locally.
 
-🎯 Design Philosophy
+Design Philosophy
 
-🔍 Interpretable (no black-box ML)
+Interpretable (no black-box ML)
 
-🧩 Modular & extensible
+Modular & extensible
 
-🔁 Reproducible & deterministic
+Reproducible & deterministic
 
-🚫 No UI / No database (logic-first MVP)
+No UI / No database (logic-first MVP)
 
-🧠 Hackathon- and research-grade architecture
 
-🛣️ Roadmap
 
-Stage 5: Target-level safety integration
-
-Stage 6: UI / Open Targets Platform view
-
-Stage 7: ML-based scoring (optional)
-
-📌 Disclaimer
+Disclaimer:
 
 S.A.F.E.R is a research and decision-support tool.
 It does not make clinical recommendations.
 
-🙌 Acknowledgements
+Acknowledgements:
 
 Built using publicly available data from the Open Targets Platform.
-
-🏁 One-Line Pitch
-
-S.A.F.E.R is a safety-aware drug repurposing framework that integrates biological evidence with real-world adverse event data to prioritize safer therapeutic opportunities.
