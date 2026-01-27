@@ -2,69 +2,43 @@ from collections import defaultdict
 from typing import List, Dict
 
 
-def aggregate_disease_associations(
-    target_disease_map: Dict[str, List[dict]]
-) -> List[dict]:
+def aggregate_disease_associations(associations: List[Dict]) -> List[Dict]:
     """
-    Aggregate disease associations across multiple targets.
+    Aggregate disease association scores across all targets.
 
     Args:
-        target_disease_map (dict):
-            {
-              "PTGS1": [
-                  {"disease_id": str, "disease_name": str, "association_score": float},
-                  ...
-              ],
-              "PTGS2": [
-                  {...}
-              ]
-            }
+        associations: List of target-disease association records
 
     Returns:
-        list[dict]: Aggregated disease list:
-            [
-              {
-                "disease_id": str,
-                "disease_name": str,
-                "association_score": float,
-                "supporting_targets": list[str]
-              }
-            ]
+        List of diseases with aggregated association scores
     """
 
-    disease_index = defaultdict(
-        lambda: {
-            "disease_name": None,
-            "association_score": 0.0,
-            "supporting_targets": set(),
-        }
-    )
+    disease_scores = defaultdict(list)
 
-    for target_symbol, disease_list in target_disease_map.items():
-        for entry in disease_list:
-            disease_id = entry.get("disease_id")
-            disease_name = entry.get("disease_name")
-            score = entry.get("association_score")
+    for record in associations:
+        disease_id = record.get("disease_id")
+        disease_name = record.get("disease_name")
+        score = record.get("association_score", 0)
 
-            if disease_id is None or score is None:
-                continue
-
-            record = disease_index[disease_id]
-
-            record["disease_name"] = disease_name
-            record["association_score"] = max(
-                record["association_score"], score
+        if disease_id:
+            disease_scores[disease_id].append(
+                {
+                    "disease_name": disease_name,
+                    "score": score
+                }
             )
-            record["supporting_targets"].add(target_symbol)
 
     aggregated = []
-    for disease_id, data in disease_index.items():
+
+    for disease_id, entries in disease_scores.items():
+        scores = [e["score"] for e in entries]
+        disease_name = entries[0]["disease_name"]
+
         aggregated.append(
             {
                 "disease_id": disease_id,
-                "disease_name": data["disease_name"],
-                "association_score": data["association_score"],
-                "supporting_targets": sorted(list(data["supporting_targets"])),
+                "disease_name": disease_name,
+                "association_score": round(sum(scores) / len(scores), 4)
             }
         )
 

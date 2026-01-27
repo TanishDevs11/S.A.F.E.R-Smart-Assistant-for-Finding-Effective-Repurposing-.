@@ -1,26 +1,32 @@
-from typing import List, Dict
+from typing import List, Dict, Set
 
 
-def rank_diseases(diseases: List[Dict]) -> List[Dict]:
+def rank_diseases(
+    diseases: List[Dict],
+    known_indications: Set[str]
+) -> List[Dict]:
     """
-    Rank diseases by association score and number of supporting targets.
-
-    Ranking order:
-    1. Highest association_score first
-    2. Highest number of supporting_targets second
+    Rank diseases by association score, excluding known indications.
 
     Args:
-        diseases (list): Output from Stage 3.3
+        diseases: Aggregated disease associations
+        known_indications: Set of disease IDs already indicated for the drug
 
     Returns:
-        list[dict]: Ranked disease list
+        Ranked list of candidate repurposing diseases
     """
 
-    return sorted(
-        diseases,
-        key=lambda d: (
-            d.get("association_score", 0),
-            len(d.get("supporting_targets", [])),
-        ),
-        reverse=True,
+    # Filter out diseases already indicated
+    filtered = [
+        d for d in diseases
+        if d.get("disease_id") not in known_indications
+    ]
+
+    # Sort by association score (descending)
+    ranked = sorted(
+        filtered,
+        key=lambda x: x.get("association_score", 0),
+        reverse=True
     )
+
+    return ranked
