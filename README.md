@@ -70,6 +70,7 @@ S.A.F.E.R/
 ├── requirements.txt            # Project dependencies
 └── README.md                   # Project documentation
 ```
+```
 Installation & Setup: 
 Clone the Repository
 git clone <your-repo-url>
