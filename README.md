@@ -73,7 +73,7 @@ S.A.F.E.R/
 ```
 Installation & Setup: 
 Clone the Repository
-git clone <your-repo-url>
+git clone <url>
 cd S.A.F.E.R
 ```
 ```
