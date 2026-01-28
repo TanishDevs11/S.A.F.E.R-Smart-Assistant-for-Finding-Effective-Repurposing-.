@@ -13,21 +13,21 @@ Rather than answering only “what might work”, S.A.F.E.R is designed to answe
 
 The framework is logic-first, interpretable, reproducible, and designed as a decision-support tool for exploratory research.
 
-Key Features
+Key Features:
 
-ChEMBL-centric drug identity resolution
+1. ChEMBL-centric drug identity resolution
 
-Mechanism- and target-driven disease prioritization
+2. Mechanism- and target-driven disease prioritization
 
-Automatic exclusion of known indications
+3. Automatic exclusion of known indications
 
-Integration of real pharmacovigilance (FAERS) safety signals
+4. Integration of real pharmacovigilance (FAERS) safety signals
 
-Safety-aware disease re-scoring (SAFER score)
+5. Safety-aware disease re-scoring (SAFER score)
 
-Live queries to the Open Targets GraphQL API (no static datasets)
+6. Live queries to the Open Targets GraphQL API (no static datasets)
 
-Fully modular and extensible architecture
+Fully modular and extensible architecture:
 ```
 Pipeline Architecture:
 
@@ -69,8 +69,7 @@ S.A.F.E.R/
 ├── requirements.txt            # Project dependencies
 └── README.md                   # Project documentation
 ```
-```
-Installation & Setup
+Installation & Setup: 
 Clone the Repository
 git clone <your-repo-url>
 cd S.A.F.E.R
@@ -79,7 +78,6 @@ cd S.A.F.E.R
 Create and Activate a Virtual Environment
 python -m venv venv
 ```
-
 ```
 Windows
 
@@ -93,26 +91,22 @@ source venv/bin/activate
 ```
 Install Dependencies
 pip install -r requirements.txt
+```
 
 Running S.A.F.E.R
 
 Run the full pipeline using a ChEMBL ID:
-
+```
 python app.py
-
+```
 
 You will be prompted to enter a ChEMBL identifier.
 
 Example
-
-Input
-
-CHEMBL25
 ```
+Input : CHEMBL25
 
-```
-
-Output (simplified)
+Output: (simplified)
 
 {
   "drug": {
@@ -135,59 +129,65 @@ Output (simplified)
     }
   ]
 }
+```
 
 SAFER Scoring Logic
 Risk Level	Penalty Factor
-LOW	1.00
+LOW	      1.00
 MEDIUM	0.75
-HIGH	0.50
-```
+HIGH	      0.50
+
 SAFER Score is calculated as:
-
+```
 SAFER Score = Association Score × Safety Penalty
-
+```
 
 This ensures that strong biological associations are preserved while unsafe candidates are deprioritized.
 
-Data Sources
-
+Data Sources:
+```
 All data are fetched live at runtime.
 
-Open Targets Platform (GraphQL API)
+1. Open Targets Platform (GraphQL API)
 
-Drug–target–disease associations
+2. Drug–target–disease associations
 
-Mechanisms of action
+3. Mechanisms of action
 
-Clinical evidence scores
+4. Clinical evidence scores
 
-Pharmacovigilance (FAERS)
+5. Pharmacovigilance (FAERS)
 
-Adverse drug reaction signals
+6. Adverse drug reaction signals
 
-Log likelihood ratios (logLR)
+7. Log likelihood ratios (logLR)
+
+```
 
 No datasets are downloaded or stored locally.
 
-Design Philosophy
+Design Philosophy:
 
-Interpretable (no black-box machine learning)
+```
+Interpretable (No black-box machine learning)
+      ↓
+Modular and Extensible
+      ↓
+Deterministic and Reproducible
+      ↓
+Logic-First MVP
+      ↓
+No Database or Persistent Storage
+      ↓
+Frontend Optional and Decoupled
 
-Modular and extensible
+```
 
-Deterministic and reproducible
-
-Logic-first MVP
-
-No database or persistent storage
-
-Frontend optional and decoupled
-
-Disclaimer
+Disclaimer:
 
 S.A.F.E.R is a research and decision-support tool.
 It does not provide clinical recommendations and must not be used for medical decision-making.
 
-Acknowledgements
+Acknowledgements:
 
 This project is built using publicly available data from the Open Targets Platform.
