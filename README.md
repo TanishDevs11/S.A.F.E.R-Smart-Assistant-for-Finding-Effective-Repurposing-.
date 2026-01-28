@@ -47,7 +47,7 @@ Safety-Aware Disease Re-scoring
 
 ```
 ```
-Project Structure
+Project Structure (##To be changed...)
 S.A.F.E.R/
 ├── app.py                      # Pipeline orchestrator (main entry point)
 ├── chembl/                     # STAGE 1: Drug identity
