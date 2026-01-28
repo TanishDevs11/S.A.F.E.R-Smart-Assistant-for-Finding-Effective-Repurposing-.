@@ -46,6 +46,7 @@ Safety Signal Analysis (Stage 4)
 Safety-Aware Disease Re-scoring
 
 ```
+```
 Project Structure
 S.A.F.E.R/
 ├── app.py                      # Pipeline orchestrator (main entry point)
