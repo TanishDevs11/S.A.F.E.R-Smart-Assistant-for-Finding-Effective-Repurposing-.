@@ -54,7 +54,7 @@ else:
         )
 
 # --------------------
-# APPROVED & INVESTIGATIONAL INDICATIONS (✅ FIXED)
+# APPROVED & INVESTIGATIONAL INDICATIONS
 # --------------------
 st.subheader("Approved & Investigational Indications")
 
@@ -64,7 +64,7 @@ cols = st.columns(5)
 for i, ind in enumerate(approved_inds[:4]):
     cols[i].success(f"{ind}\n\nApproved")
 
-# Investigational (if present)
+# Investigational
 if investigational_inds:
     cols[-1].info(f"{investigational_inds[0]}\n\nInvestigational")
 else:
@@ -89,33 +89,51 @@ for _, row in df.head(5).iterrows():
     st.progress(row["confidence"] / 100)
 
 # --------------------
-# SAFETY INSIGHTS – CHARTS
+# SAFETY INSIGHTS – BAR CHART (✅ FIXED)
 # --------------------
 st.subheader("Safety Insights")
 
-events = safety["high_risk_events"][:5]
-counts = list(range(len(events), 0, -1))
+events = safety.get("high_risk_events", [])[:5]
 
-fig1 = px.bar(
-    x=counts,
-    y=events,
-    orientation="h",
-    title="Pharmacovigilance by Drug",
-    labels={"x": "Relative Signal Strength", "y": "Adverse Event"}
-)
-st.plotly_chart(fig1, use_container_width=True)
+if not events:
+    st.info("No high-risk safety signals available for this drug.")
+else:
+    df_events = pd.DataFrame({
+        "Adverse Event": events,
+        "Relative Signal Strength": list(range(len(events), 0, -1))
+    })
 
-# Radar chart (illustrative but data-driven later)
-radar_df = pd.DataFrame({
-    "Target Family": ["Immune", "Inflammatory", "Cardiovascular", "Metabolic", "Other"],
-    "Risk": [5, 3, 2, 1, 1]
-})
+    fig1 = px.bar(
+        df_events,
+        x="Relative Signal Strength",
+        y="Adverse Event",
+        orientation="h",
+        title="Pharmacovigilance by Drug"
+    )
 
-fig2 = px.line_polar(
-    radar_df,
-    r="Risk",
-    theta="Target Family",
-    line_close=True,
-    title="Pharmacovigilance by Target Family"
-)
-st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig1, use_container_width=True)
+
+# --------------------
+# TARGET FAMILY RADAR
+# --------------------
+st.subheader("Pharmacovigilance by Target Family")
+
+family_risk = data.get("family_risk", {})
+
+if not family_risk:
+    st.info("No target-family risk data available.")
+else:
+    radar_df = pd.DataFrame({
+        "Target Family": list(family_risk.keys()),
+        "Risk": list(family_risk.values())
+    })
+
+    fig2 = px.line_polar(
+        radar_df,
+        r="Risk",
+        theta="Target Family",
+        line_close=True,
+        title="Safety Risk by Biological Target Family"
+    )
+
+    st.plotly_chart(fig2, use_container_width=True)

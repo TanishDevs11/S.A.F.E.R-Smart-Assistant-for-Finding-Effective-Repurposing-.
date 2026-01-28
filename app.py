@@ -11,7 +11,7 @@ from chembl.parser import parse_drug_response
 from mechanism.fetcher import fetch_drug_mechanisms
 from mechanism.normalizer import normalize_mechanisms
 
-from indications.fetcher import fetch_drug_indications   # ✅ NEW
+from indications.fetcher import fetch_drug_indications
 
 from stage3.fetcher import fetch_target_disease_associations
 from stage3.aggregator import aggregate_disease_associations
@@ -49,9 +49,9 @@ def run_safer_pipeline(chembl_id: str) -> dict:
     }
 
     # -------------------------
-    # Stage 2.5 – Known indications (truth source)
+    # Stage 2.5 – Approved indications (truth source)
     # -------------------------
-    indications = fetch_drug_indications(chembl_id)   # ✅ REAL approved uses
+    indications = fetch_drug_indications(chembl_id)
 
     # -------------------------
     # Stage 3 – Disease prioritization (repurposing)
@@ -89,7 +89,7 @@ def run_safer_pipeline(chembl_id: str) -> dict:
     return {
         "drug": drug,
         "mechanisms": mechanisms,
-        "indications": indications,        # ✅ FIXES approved row
+        "indications": indications,
         "safety_summary": safety_summary,
         "results": safer_results
     }
