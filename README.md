@@ -93,38 +93,34 @@ S.A.F.E.R-Smart-Assistant-for-Finding-Effective-Repurposing-./
     └── ranker.py
 
 ```
-```
 Installation & Setup: 
+```
 Clone the Repository
 git clone <url>
 cd S.A.F.E.R
 ```
-```
 Create and Activate a Virtual Environment
+```
 python -m venv venv
 ```
-```
 Windows
-
+```
 .\venv\Scripts\Activate.ps1
 ```
-```
 Linux / macOS
-
+```
 source venv/bin/activate
 ```
-```
 Install Dependencies
+```
 pip install -r requirements.txt
 ```
-
 Running S.A.F.E.R
 
 Run the full pipeline using a ChEMBL ID:
 ```
 python app.py
 ```
-
 You will be prompted to enter a ChEMBL identifier.
 
 Example
