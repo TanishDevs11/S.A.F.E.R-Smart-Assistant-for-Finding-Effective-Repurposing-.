@@ -2,9 +2,11 @@ import requests
 
 OPEN_TARGETS_URL = "https://api.platform.opentargets.org/api/v4/graphql"
 
+
 def fetch_drug_indications(chembl_id: str) -> dict:
     """
-    Fetch approved and investigational indications for a drug.
+    Fetch approved and investigational indications for a drug
+    with phase and disease area metadata.
     """
 
     query = """
@@ -14,6 +16,9 @@ def fetch_drug_indications(chembl_id: str) -> dict:
           rows {
             disease {
               name
+              therapeuticAreas {
+                name
+              }
             }
             maxPhaseForIndication
           }
@@ -22,11 +27,9 @@ def fetch_drug_indications(chembl_id: str) -> dict:
     }
     """
 
-    variables = {"chemblId": chembl_id}
-
     response = requests.post(
         OPEN_TARGETS_URL,
-        json={"query": query, "variables": variables},
+        json={"query": query, "variables": {"chemblId": chembl_id}},
         timeout=15
     )
 
@@ -47,10 +50,22 @@ def fetch_drug_indications(chembl_id: str) -> dict:
         name = r["disease"]["name"]
         phase = r["maxPhaseForIndication"]
 
+        # extract disease areas safely
+        areas = [
+            ta["name"]
+            for ta in r["disease"].get("therapeuticAreas", [])
+        ]
+
+        record = {
+            "name": name,
+            "phase": phase,
+            "areas": areas
+        }
+
         if phase == 4:
-            approved.append(name)
+            approved.append(record)
         else:
-            investigational.append(name)
+            investigational.append(record)
 
     return {
         "approved": approved,
