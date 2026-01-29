@@ -48,27 +48,50 @@ Safety-Aware Disease Re-scoring
 ```
 ```
 Project Structure (##To be changed...)
-S.A.F.E.R/
-├── app.py                      # Pipeline orchestrator (main entry point)
-├── chembl/                     # STAGE 1: Drug identity
-│   ├── validator.py            # Validates ChEMBL IDs
-│   ├── resolver.py             # Resolves drug metadata
-│   └── parser.py               # Normalizes raw API responses
-├── mechanism/                  # STAGE 2: Mechanism & targets
-│   ├── fetcher.py              # Fetches mechanisms of action
-│   └── normalizer.py           # Normalizes mechanism data
-├── stage3/                     # STAGE 3: Disease prioritization
-│   ├── fetcher.py              # Retrieves target–disease associations
-│   ├── aggregator.py           # Aggregates association evidence
-│   ├── filter.py               # Removes known indications
-│   ├── ranker.py               # Scores disease relevance
-│   └── prioritizer.py          # Final disease ranking logic
-├── safety/                     # STAGE 4: Safety layer
-│   ├── fetcher.py              # Fetches pharmacovigilance signals
-│   ├── normalizer.py           # Normalizes ADR signals
-│   └── scorer.py               # Applies safety penalties
-├── requirements.txt            # Project dependencies
-└── README.md                   # Project documentation
+S.A.F.E.R-Smart-Assistant-for-Finding-Effective-Repurposing-./
+├── .gitignore
+├── README.md
+├── Rule Book/
+│   ├── Design Document.MD
+│   ├── Product Requirements Document.md
+│   ├── Technical Rules Document.MD
+│   └── todo.md
+├── app.py
+├── chembl/
+│   ├── __init__.py
+│   ├── parser.py
+│   ├── resolver.py
+│   └── validator.py
+├── external/
+│   └── pubchem.py
+├── frontend.py
+├── indications/
+│   ├── __init__.py
+│   └── fetcher.py
+├── mechanism/
+│   ├── __init__.py
+│   ├── family_mapper.py
+│   ├── fetcher.py
+│   ├── normalizer.py
+│   └── target_mapper.py
+├── pages/
+│   └── insights.py
+├── requirements.txt
+├── safety/
+│   ├── __init__.py
+│   ├── classifier.py
+│   ├── family_risk.py
+│   ├── fetcher.py
+│   ├── normalizer.py
+│   └── scorer.py
+└── stage3/
+    ├── __init__.py
+    ├── aggregator.py
+    ├── fetcher.py
+    ├── filter.py
+    ├── prioritizer.py
+    └── ranker.py
+
 ```
 ```
 Installation & Setup: 
